@@ -1,34 +1,24 @@
-import { useState, useEffect} from 'react';
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Post from "./pages/Post";
+import Home from "./pages/Home";
+import Header from "./pages/Header";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
 
-  const [type, setType] = useState('users');
-  const [data, setData] = useState([]);
-  
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/posts" element={<Home />} />
+        <Route path="/posts/:id" element={<Post />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+      <footer className="footer">Footer</footer>
+    </>
 
-  useEffect( () => {
-    const getUsers = async () =>{
-      try{
-        const response = await fetch(`https://jsonplaceholder.typicode.com/${type}`);
-        if (!response.ok){
-          throw new Error ("Falied to fetch users");
-        }
-        const data = await response.json();
-        setData(data);
-      }catch (e){
-        console.log(e.message)
-      }
-    }
-    getUsers();
-    }, [type]);
-return (
-  <div>
-  <h1>Resurce: {type}</h1>
-          <button onClick={()=> setType("users")}>Users</button>
-          <button onClick={()=> setType("albums")}>Albums</button>
-          <button onClick={()=> setType("posts")}>Posts</button>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
-  </div>
-)
+
+  )
 }
 export default App;
