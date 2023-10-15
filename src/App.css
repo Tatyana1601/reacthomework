@@ -54,3 +54,9 @@
   padding: 10px;
   border: 1px solid black;
 }
+.button {
+  background: black;
+  color: aliceblue;
+  border-radius: 10px;
+  border: none;
+}

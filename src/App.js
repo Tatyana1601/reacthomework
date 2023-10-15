@@ -1,24 +1,23 @@
-import { Route, Routes } from "react-router-dom";
+import { useState, createContext } from "react";
 import "./App.css";
-import Post from "./pages/Post";
-import Home from "./pages/Home";
-import Header from "./pages/Header";
-import PageNotFound from "./pages/PageNotFound";
+import Tasks from "./components/Tasks";
+
+export const Context = createContext(null);
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+  const [name, setName] = useState("");
 
+  const handleAddNewTasks = () => {
+    const items = [...tasks, name];
+    setTasks(items)
+  };
   return (
-    <>
-      <Header />
-      <Routes>
-        <Route path="/posts" element={<Home />} />
-        <Route path="/posts/:id" element={<Post />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-      <footer className="footer">Footer</footer>
-    </>
-
-
+    <Context.Provider value={tasks}>
+      <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      <button className='button' onClick={handleAddNewTasks}>Create new tasks</button>
+      <Tasks />
+    </Context.Provider>
   )
 }
 export default App;
